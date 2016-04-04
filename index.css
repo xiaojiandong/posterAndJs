@@ -1,0 +1,162 @@
+
+
+body{
+  background:#fff;
+  color:#555;
+  font-size:14px;
+  background:#333;
+  font-family: '微软雅黑';
+  margin:0;
+  padding:0;
+  -webkit-font-smoothing:antialiased; /*使字体变得清晰（可选）*/ 	
+}
+
+/*整个父盒子wrap;包含全部海报，中心海报，点击按钮三个部分*/
+.wrap{
+	width:100%;
+	/*height:560px;*/
+	height:90%;
+	border: 2px solid #f00;
+	position:absolute;
+	/*top:50%;*/
+	top:35%;
+	margin-top:-280px;
+	background:url(img/bk.jpg) no-repeat;
+	background-size:100% 100%;
+	overflow:hidden;
+	-webkit-perspective:700px; /*让子元素获取3D元素支持，这里是设置子元素距离视图的位置*/
+	/*对应子元素为：.photo-wrap*/
+}
+
+/*海报部分父盒子*/
+.photo{
+	width:260px;
+	height:320px;
+	position:absolute;
+	left:50%; /*使每张海报与中心海报保持平滑过渡*/
+	top:50%;
+	margin-left:-130px;/*水平居中*/
+	z-index: 1; /*普通的photo为1，photo_center为999*/
+	box-shadow:0 0 3px rgba(0,0,0.2);
+	transition-duration: 1s; /*使每张海报都有延时动态效果*/
+}
+/*海报的正面和反面共同样式*/
+.photo .side{ 
+	position:absolute;
+	width:100%;
+	height:100%;
+	background:#eee;
+	top:0;
+	right:0;
+	padding:10px;
+	box-sizing:border-box;
+}
+/*海报正面*/
+.photo .side-front{}
+.photo .side-front .image{
+	width:100%;
+	height:90%;
+	line-height:250px;
+	overflow:hidden;
+}
+.photo .side-front .image img{/*海报图片*/
+	width:100%;
+	height:100%;
+}
+.photo .side-front .caption{/*海报标题*/
+	text-align:center;
+	font-size:16px;
+	line-height:50px;
+}
+
+/*海报反面*/
+.photo .side-back{
+	/*display:none;*/
+}
+.photo .side-back .desc{
+   color:#666;
+   font-size:14px;
+   line-height: 1.5em;
+}
+
+/*新添的当前中心海报选的样式（动态添加）*/
+.photo_center{
+	/*width:260px;*/
+	/*height:320px;*/
+	left:50%;
+	top:50%;
+	margin-left:-130px;/*水平居中*/
+	margin-top:-160px;
+	z-index:999;
+	/*transform:rotateY(50deg);对应父元素为：.wrap*/
+}
+.photo-wrap{/*负责翻转，对应支持他的父元素为wrap*/
+	position:absolute;
+	width:100%;
+	height:100%;
+	-webkit-transform-style:preserve-3d;/*支持3D效果（对应父元素wrap）*/
+	-webkit-transition-duration: .7s;/*中心海报动画延时效果*/
+	-webkit-transform-origin:0% 50%; /*参数：x y(y轴中心线移动)*/
+}
+.photo-wrap .side-front{
+	-webkit-transform: rotateY(0deg);/*正面朝上*/
+}
+.photo-wrap .side-back{
+	-webkit-transform: rotateY(180deg);/*背面朝下180deg*/
+}
+.photo-wrap .side{
+	-webkit-backface-visibility:hidden;/*背面朝下180deg隐藏*/
+}
+
+/*添加两个新样式:photo_front和photo_back，在photo photo_center这个类中*/
+.photo_front .photo-wrap{/*添加photo_front类，影响photo-wrap类*/
+	/*-webkit-transform: rotateY(0deg);正面朝上*/
+	-webkit-transform:translate(0px , 0px) rotateY(0deg);
+}
+.photo_back .photo-wrap{
+	-webkit-transform:translate(250px , 0px) rotateY(180deg);
+	/*-webkit-transform: rotateY(180deg);反面朝上*/
+}
+
+
+/*控制按钮的样式*/
+.nav{
+	width:40%;
+	height:30px;
+	line-height:30px;
+	position:absolute;
+	left: 30%;
+	bottom: 25px;
+	z-index:999;
+	/*background: yellow;*/
+	text-align:center;
+}
+/*普通按钮样式*/
+.nav .i{
+	width:30px;
+	height:30px;
+	display:inline-block; /*i是span元素*/
+	cursor:pointer;
+	background:#eee;
+	text-align:center;
+	border-radius:50%;
+	-webkit-transform:scale(.5);
+	-webkit-transition-duration: 1.2s;
+	background:#555;
+}
+
+/*当前选中按钮样式*/
+.nav .i_current{
+	-webkit-transform:scale(1);
+	background:red;
+}
+
+/*背面样式*/
+.nav .i_back{
+	-webkit-transform:rotateY(-180deg);
+	/*background:#555;*/
+}
+
+
+
+
